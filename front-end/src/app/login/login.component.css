@@ -1,0 +1,33 @@
+mat-toolbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 64px;
+    background: #d1d3dd;
+}
+
+mat-toolbar,
+a {
+    text-decoration: none;
+}
+li{
+    display: inline;
+    padding-left: 0.8rem;
+}
+
+active-link {
+    color: white;
+}
+
+span {
+    margin-left: 24px;
+}
+
+img {
+    width: 100%;
+}
+
+.mat-icon {
+    font-size: larger;
+    height: 20px ;
+    width: 20px;
+}

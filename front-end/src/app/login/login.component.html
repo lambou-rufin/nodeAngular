@@ -1,0 +1,20 @@
+<mat-toolbar>
+    <span>
+        <a routerLinkActive="active-link" routerLink="/">
+            <span>
+                <mat-icon class="icon">dashboard</mat-icon>Bienvenu
+            </span>
+        </a>
+    </span>
+    <ul>
+        <li><a (click)="loginAction()" routerLinkActive="list-item-active">Login</a></li>
+        <li><a (click)="signupAction()" routerLinkActive="list-item-active">SignUp</a></li>
+        <li><a (click)="forgotPasswordAction()" routerLinkActive="list-item-active">Forgot password</a></li>
+    </ul>
+</mat-toolbar>
+<section>
+    <div class="example-sidenav-content">
+        <router-outlet></router-outlet>
+    </div>
+    <img src="../../assets/images/imagess.jfif" alt="">
+</section>

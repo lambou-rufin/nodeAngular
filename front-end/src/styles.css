@@ -1,0 +1,19 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+ 
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font: 1rem "Fira Sans", serif; font-family: 'Poppins', sans-serif;
+}
+.black-snackbar{
+    background: black !important;
+    color: white !important;
+}
+.green-snackbar{
+    background: #32cd32 !important;
+    color: white !important;
+}
