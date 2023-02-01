@@ -15,9 +15,8 @@ export class RouteGuardService {
     private snackbarService: SnackbarService,
   ) { }
   canActivate(route: ActivatedRouteSnapshot): boolean {
-    let expectedRoleArray = route.data;
+    let expectedRoleArray:any = route.data;
     expectedRoleArray = expectedRoleArray.expectedRole;
-
     const token: any = localStorage.getItem('token');
     var tokenPayload: any;
     try {
@@ -37,7 +36,7 @@ export class RouteGuardService {
       if (this.auth.isAuthenticated() && checkRole) {
         return true;
       }
-      this.snackbarService.openSnackBar(Globalconstants.unauthorized,Globalconstants.error);
+      this.snackbarService.openSnackBar(Globalconstants.unauthorized, Globalconstants.error);
       this.router.navigate(['/dashboard']);
       return false;
     }

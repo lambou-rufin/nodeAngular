@@ -14,6 +14,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MainComponent } from './main/main.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
@@ -54,6 +55,7 @@ const NgxUiLoaderConfig: NgxUiLoaderConfig = {
     MatIconModule,
     FormsModule,
     MatListModule,
+    MatSnackBarModule,
     MatMenuModule,
     MatTableModule,
     MatPaginatorModule,
@@ -74,6 +76,7 @@ const NgxUiLoaderConfig: NgxUiLoaderConfig = {
     MatInputModule,
     MatFormFieldModule,
     MatSidenavModule,
+    MatSnackBarModule,
     MatToolbarModule,
     MatIconModule,
     FormsModule,
