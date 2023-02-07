@@ -8,6 +8,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { NgxUiLoaderModule, NgxUiLoaderConfig, SPINNER, PB_DIRECTION } from 'ngx-ui-loader';
 import { SharedModule } from './shared.module';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptorInterceptor } from './services/token-interceptor.interceptor';
 
 const NgxUiLoaderConfig: NgxUiLoaderConfig = {
   text: "Loading....",
@@ -37,7 +39,7 @@ const NgxUiLoaderConfig: NgxUiLoaderConfig = {
     MatMenuModule,
     NgxUiLoaderModule.forRoot(NgxUiLoaderConfig)
   ],
-  providers: [],
+  providers: [HttpClientModule,{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptorInterceptor,multi:true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
