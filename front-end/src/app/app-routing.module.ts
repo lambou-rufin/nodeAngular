@@ -13,19 +13,19 @@ const routes: Routes = [
   {
     path: "",
     component: LoginComponent,
-    loadChildren: () => import("src/app/login/login.module").then((m) => m.LoginModule),//this is the loading
-     canActivate:[RouteGuardService],
+    loadChildren: () => import("src/app/login/login.module").then((m) => m.LoginModule),    //this is the loading
+    //  canActivate:[RouteGuardService],
      data: {
-      expectRole: ['admin','user']
+      expectedRole: ['admin','user']
      }
   },
   {
     path: "dashboard",
     component: MainComponent,
     loadChildren: () => import("src/app/main/main.module").then((m) => m.MainModule), //this is the loading
-    canActivate:[RouteGuardService],
+    // canActivate:[AuthGuardGuard],
     data: {
-     expectRole: ['admin','user']
+      expectedRole: ['admin','user']
     }
   },
   { path: '', redirectTo: 'welcome', 'pathMatch': 'full' },

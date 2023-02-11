@@ -1,4 +1,4 @@
-import { Component,OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -28,26 +28,29 @@ export class LogginComponent implements OnInit {
     })
   }
   handleSubmit() {
-    this.ngxService.start();
+    // this.ngxService.start();
     let formData = this.loginForm.value;
     let data = {
       email: formData.email,
       password: formData.password
     }
-    this.userService.login(data).subscribe({next:(response: any) => {
-      this.ngxService.stop();
-      this.dialogRef.close();
-      localStorage.setItem('token', response.token);
-      this.router.navigate(['/dashboard']);
-    }, error: (error) => {
-      this.ngxService.stop();
-      if (error.error?.message) {
-        this.responseMessage = error.error?.message;
-      } else {
-        this.responseMessage = Globalconstants.genericError;
+    this.userService.login(data).subscribe({
+      next: (response: any) => {
+        // this.ngxService.stop();
+        this.dialogRef.close();
+        localStorage.setItem('token', response.token);
+        console.log(response);
+        this.router.navigate(['dashboard']);
+      }, error: (error) => {
+        // this.ngxService.stop();
+        if (error.error?.message) {
+          this.responseMessage = error.error?.message;
+        } else {
+          this.responseMessage = Globalconstants.genericError;
+        }
+        // this.snackbarService.openSnackBar(this.responseMessage,Globalconstants.error);
       }
-      // this.snackbarService.openSnackBar(this.responseMessage,Globalconstants.error);
-    }}
-    ) 
+    }
+    )
   }
 }

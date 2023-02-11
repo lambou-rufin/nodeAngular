@@ -19,15 +19,6 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (localStorage.getItem('token') != null) {
-      this.userService.checkToken().subscribe({
-        next: (response: any) => {
-          this.router.navigate(['/dashboard']);
-        }, error: (error) => {
-          console.log(error);
-        }
-      })
-    }
   }
   signupAction() {
     const dialogRef = this.dialog.open(SignupComponent, { data: null, width: "500px" });
