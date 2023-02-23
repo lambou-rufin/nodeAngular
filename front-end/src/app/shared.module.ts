@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTableModule } from '@angular/material/table';
@@ -61,6 +62,7 @@ const NgxUiLoaderConfig: NgxUiLoaderConfig = {
     MatPaginatorModule,
     HttpClientModule,
     CommonModule,
+    MatCardModule,
     ReactiveFormsModule,
     MatDividerModule,
     MatDialogModule,
@@ -87,6 +89,7 @@ const NgxUiLoaderConfig: NgxUiLoaderConfig = {
     HttpClientModule,
     ReactiveFormsModule,
     MatDividerModule,
+    MatCardModule,
     MatDialogModule
   ]
 })
