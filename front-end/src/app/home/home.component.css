@@ -14,15 +14,17 @@
 
 .row {
    height: 50vh;
+   margin-left: 1rem;
 }
 .button{
    width: 100%;
    background: #6265c8;
    border-radius: 5px;
 }
-.row{
-   margin-left: 2rem;
-}
 body{
-   margin: 2rem;
+   margin: 1rem;
 }
+div {
+   display: inline-block;
+   margin-right: 0.5rem;
+ }
