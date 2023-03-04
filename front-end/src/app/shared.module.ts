@@ -22,6 +22,7 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import { NgxUiLoaderModule,NgxUiLoaderConfig,SPINNER,PB_DIRECTION } from 'ngx-ui-loader';
 import { LoginComponent } from './login/login.component';
+import { ConfirmationComponent } from './component/confirmation/confirmation.component';
 
 
 const NgxUiLoaderConfig: NgxUiLoaderConfig = {
@@ -43,6 +44,7 @@ const NgxUiLoaderConfig: NgxUiLoaderConfig = {
     LoginComponent,
     HeaderComponent,
     SidenavComponent,
+    ConfirmationComponent
   ],
   imports: [
     CommonModule,
