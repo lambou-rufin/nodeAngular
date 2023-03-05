@@ -34,3 +34,6 @@ button{
 .header-right {
     float: right;
   }
+  .justify-content-between{
+    gap: 80rem;
+  }

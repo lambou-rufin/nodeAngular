@@ -20,6 +20,7 @@ import { RouterModule } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 import { NgxUiLoaderModule,NgxUiLoaderConfig,SPINNER,PB_DIRECTION } from 'ngx-ui-loader';
 import { LoginComponent } from './login/login.component';
 import { ConfirmationComponent } from './component/confirmation/confirmation.component';
@@ -68,6 +69,7 @@ const NgxUiLoaderConfig: NgxUiLoaderConfig = {
     ReactiveFormsModule,
     MatDividerModule,
     MatDialogModule,
+    MatDatepickerModule,
     NgxUiLoaderModule.forRoot(NgxUiLoaderConfig)
 
   ],
@@ -92,7 +94,8 @@ const NgxUiLoaderConfig: NgxUiLoaderConfig = {
     ReactiveFormsModule,
     MatDividerModule,
     MatCardModule,
-    MatDialogModule
+    MatDialogModule,
+    MatDatepickerModule
   ]
 })
 export class SharedModule { }
