@@ -23,8 +23,9 @@ export class HeaderComponent implements OnInit {
   }
   logout(){
     const dialogConfig = new MatDialogConfig();
+    dialogConfig.width ="500px";
     dialogConfig.data = {
-      message: 'Logout'
+      message: 'logout'
     };
     const dialogRef = this.dialog.open(ConfirmationComponent,dialogConfig);
     const sub = dialogRef.componentInstance.onEmitStatusChange.subscribe((user)=>{

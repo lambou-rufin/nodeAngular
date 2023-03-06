@@ -16,11 +16,27 @@
    height: 50vh;
    margin-left: 1rem;
 }
-.button{
-   width: 100%;
-   background: #6265c8;
-   border-radius: 5px;
-}
+.button {
+   display: inline-block;
+   padding: 8px 10px;
+   font-size: 24px;
+   cursor: pointer;
+   text-align: center;
+   text-decoration: none;
+   outline: none;
+   color: #fff;
+   background-color:  #6265c8;
+   border: none;
+   border-radius: 20px;
+ }
+ 
+ .button:hover {background-color:  #6265c8}
+ 
+ .button:active {
+   background-color: #6265c8;
+   box-shadow: 0 5px  #6265c8;
+   transform: translateY(4px);
+ }
 body{
    margin: 1rem;
 }

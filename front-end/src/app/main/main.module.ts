@@ -7,12 +7,14 @@ import { HeaderComponent } from '../header/header.component';
 import { SidenavComponent } from '../sidenav/sidenav.component';
 import { SharedModule } from '../shared.module';
 import { RouterModule } from '@angular/router';
+import { CategoryComponent } from '../manage/category/category.component';
 
 
 @NgModule({
   declarations: [
     DashboardComponent,
-    HomeComponent,  
+    HomeComponent,
+    CategoryComponent,
   ],
   imports: [
     CommonModule,

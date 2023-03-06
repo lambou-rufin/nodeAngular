@@ -37,3 +37,6 @@ button{
   .justify-content-between{
     gap: 80rem;
   }
+  .matIcon {
+    transform: scale(2);
+}
