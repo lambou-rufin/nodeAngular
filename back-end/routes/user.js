@@ -15,7 +15,7 @@ router.post('/signup', (req, res) => {
         if (!err) {
             if (results.length <= 0) {
                 query = "insert into user (name, contactNumber, email, password, status, role) values(?, ?, ?, ?, 'false', 'user');"
-                connection.query(query,[user.name,user.contactNumber,user.email,user.password], (err, results) => {
+                connection.query(query, [user.name, user.contactNumber, user.email, user.password], (err, results) => {
                     if (!err) {
                         return res.status(200).json({ message: "Successfully registered." });
 
@@ -65,9 +65,6 @@ router.post('/forgotPassword', (req, res) => {
     connection.query(query, [user.email], (err, results) => {
         if (!err) {
             if (results.length <= 0) {
-                return res.status(200).json({ message: "Password sent successfully in your email." });
-            } else {
-
                 let transporter = nodemailer.createTransport({
                     service: 'gmail',
                     auth: {
@@ -77,7 +74,7 @@ router.post('/forgotPassword', (req, res) => {
                 });
                 let mailOptions = {
                     from: process.env.EMAIL,
-                    to: results[0].email,
+                    to: user.email,
                     subject: 'Password by lambo',
                     html: '<p><b>My login detail by me lambo</b><br><b>Email:</b>' + results[0].email + '<br><b>Password:</b>' + results[0].password + '<br><a href="http://localhost:4200">Click here to login</a></p>'
                 };
@@ -88,6 +85,30 @@ router.post('/forgotPassword', (req, res) => {
                         console.log('Email sent:' + info.response);
                     }
                 });
+                return res.status(200).json({ message: "Password sent successfully in your emails." });
+            } else {
+                let transporter = nodemailer.createTransport({
+                    service: 'gmail',
+                    auth: {
+                        user: process.env.EMAIL,
+                        pass: process.env.PASSWORD
+                    }
+                });
+                let mailOptions = {
+                    from: process.env.EMAIL,
+                    to: user.email,
+                    subject: 'Password by lambo',
+                    html: '<p><b>My login detail by me lambo</b><br><b>Email:</b>' + results[0].email + '<br><b>Password:</b>' + results[0].password + '<br><a href="http://localhost:4200">Click here to login</a></p>'
+                };
+                transporter.sendMail(mailOptions, function (error, info) {
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        console.log('Email sent:' + info.response);
+                    }
+                });
+
+
                 return res.status(200).json({ message: "Password sent successfully in your email." });
             }
         } else {

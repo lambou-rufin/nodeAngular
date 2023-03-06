@@ -43,22 +43,23 @@ export class ChangePasswordComponent implements OnInit {
       newPassowprd: formData.newPassowprd,
       confirmPassword: formData.confirmPassword
     }
-    // this.userService.changePassword(data).subscribe({
-    //   next: (response: any) => {
-    //     this.ngxService.stop();
-    //     this.responseMessage = response?.message;
-    //     this.dialogRef.close();
-    //     this.snackbarService.openSnackBar(this.responseMessage, "success");
-    //   }, error: (error) => {
-    //     console.log(error);
-    //     this.ngxService.stop();
-    //     if (error.error?.message) {
-    //       this.responseMessage = error.error?.message;
-    //     } else {
-    //       this.responseMessage = Globalconstants.genericError;
-    //     }
-    //     this.snackbarService.openSnackBar(this.responseMessage,Globalconstants.error);
-    //   }
-    // }
+    this.userService.changePassword(data).subscribe({
+      next: (response: any) => {
+        this.ngxService.stop();
+        this.responseMessage = response?.message;
+        this.dialogRef.close();
+        this.snackbarService.openSnackBar(this.responseMessage, "success");
+      }, error: (error) => {
+        console.log(error);
+        this.ngxService.stop();
+        if (error.error?.message) {
+          this.responseMessage = error.error?.message;
+        } else {
+          this.responseMessage = Globalconstants.genericError;
+        }
+        this.snackbarService.openSnackBar(this.responseMessage, Globalconstants.error);
+      }
+    }
+    )
   }
 }
