@@ -24,6 +24,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { NgxUiLoaderModule,NgxUiLoaderConfig,SPINNER,PB_DIRECTION } from 'ngx-ui-loader';
 import { LoginComponent } from './login/login.component';
 import { ConfirmationComponent } from './component/confirmation/confirmation.component';
+import { ChangePasswordComponent } from './component/change-password/change-password.component';
 
 
 const NgxUiLoaderConfig: NgxUiLoaderConfig = {
@@ -45,7 +46,8 @@ const NgxUiLoaderConfig: NgxUiLoaderConfig = {
     LoginComponent,
     HeaderComponent,
     SidenavComponent,
-    ConfirmationComponent
+    ConfirmationComponent,
+    ChangePasswordComponent
   ],
   imports: [
     CommonModule,
