@@ -10,7 +10,12 @@ import { SharedModule } from '../shared.module';
 export const mainRoutes: Routes = [
   { path: '', redirectTo: 'home', 'pathMatch': 'full' },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuardGuard] },
-  { path: 'category', component: CategoryComponent, canActivate: [AuthGuardGuard] },
+  {
+    path: 'category', component: CategoryComponent, canActivate: [AuthGuardGuard],
+    data: {
+      expectedRole: ['admin']
+    }
+  },
 ];
 
 @NgModule({
