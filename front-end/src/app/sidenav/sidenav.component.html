@@ -1,13 +1,13 @@
 <mat-nav-list>
-    <div class="logo py-4">
-        <img src="../../assets/images/OIP.jpg" alt="My Project" />
+    <div class="sidenav-content">
+        <ul class="nav-list border-white" [ngClass]="{'nav-list-open': sideNavStatus}">
+            <li class="nav-list-item border-white" *ngFor="let item of list">
+                <i class="{{item.icon}}"></i>
+                <span class="border-white">
+                    <a href="http://">{{item.name}}</a>
+                </span>
+            </li>
+        </ul>
+    
     </div>
-    <mat-divider></mat-divider>
-    <h2 mat-subheader class="mt-2"><i>MyProject</i></h2>
-    <a mat-list-item routerLink="/home" routerLinkActive="list-item-active">
-        <mat-icon>home</mat-icon>Home
-    </a>
-    <a mat-list-item routerLink="/category" class="list-item">
-        <mat-icon>category</mat-icon>Categorie
-    </a> 
 </mat-nav-list>

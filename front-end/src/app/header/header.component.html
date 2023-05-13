@@ -1,9 +1,8 @@
 <mat-toolbar>
     <mat-toolbar-row class="justify-content-between">
-        <button mat-icon-button (click)="toggleSidebar()">
+        <button mat-icon-button (click)="SideNavToggled()">
             <mat-icon>menu</mat-icon>
         </button>
-
         <button mat-button [matMenuTriggerFor]="menu" class="account">
             <mat-icon color="warn" class="matIcon">account_circle</mat-icon>
         </button>
@@ -14,9 +13,8 @@
             </button>
             <button mat-menu-item (click)="logout()">
                 <mat-icon>exit_to_app</mat-icon>
-                Sign Out
+                Log Out
             </button>
         </mat-menu>
-           
     </mat-toolbar-row>
 </mat-toolbar>

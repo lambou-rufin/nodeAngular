@@ -12,32 +12,35 @@ import { ConfirmationComponent } from '../component/confirmation/confirmation.co
 export class HeaderComponent implements OnInit {
 
   role: any;
-  @Output() toggleSidebarForMe: EventEmitter<any> = new EventEmitter();
-  constructor(private router:Router,
-    private dialog:MatDialog) { }
+  @Output() sideNavToggled = new EventEmitter<boolean>();
+  menuStatus: boolean = false;
+
+  constructor(private router: Router,
+    private dialog: MatDialog) { }
 
   ngOnInit(): void { }
 
-  toggleSidebar() {
-    this.toggleSidebarForMe.emit();
+  SideNavToggled() {
+    this.menuStatus = !this.menuStatus;
+    this.sideNavToggled.emit(this.menuStatus);
   }
-  logout(){
+  logout() {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.width ="500px";
+    dialogConfig.width = "500px";
     dialogConfig.data = {
       message: 'logout'
     };
-    const dialogRef = this.dialog.open(ConfirmationComponent,dialogConfig);
-    const sub = dialogRef.componentInstance.onEmitStatusChange.subscribe((user)=>{
+    const dialogRef = this.dialog.open(ConfirmationComponent, dialogConfig);
+    const sub = dialogRef.componentInstance.onEmitStatusChange.subscribe((user) => {
       dialogRef.close();
       localStorage.clear();
       this.router.navigate(['/'])
     })
   }
-  changePassword(){
+  changePassword() {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.width ="550px";
-    this.dialog.open(ChangePasswordComponent,dialogConfig)
+    dialogConfig.width = "550px";
+    this.dialog.open(ChangePasswordComponent, dialogConfig)
   }
 }
 

@@ -14,6 +14,14 @@ button{
     outline: none;
     background: transparent;
 }
+button, .account{
+    border: 0;
+    outline: none;
+    background: transparent;
+}
+.account{
+   margin-left: 23rem;
+}
 .user{
     font-size: 14px;
 }
@@ -39,4 +47,15 @@ button{
   }
   .matIcon {
     transform: scale(2);
+}
+.mat-icon-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+.mat-icon-button:hover{
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 30%;
 }

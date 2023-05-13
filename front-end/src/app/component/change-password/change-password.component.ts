@@ -14,7 +14,8 @@ import { UserService } from 'src/app/services/user.service';
 export class ChangePasswordComponent implements OnInit {
   changePasswordForm: any = FormGroup;
   responseMessage: any;
-  constructor(private formbuilder: FormBuilder,
+  constructor(
+    private formbuilder: FormBuilder,
     private userService: UserService,
     public dialogRef: MatDialogRef<ChangePasswordComponent>,
     private ngxService: NgxUiLoaderService,

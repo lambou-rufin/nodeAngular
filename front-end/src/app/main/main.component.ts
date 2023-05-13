@@ -7,11 +7,5 @@ import { Component } from '@angular/core';
 })
 export class MainComponent {
   title = 'front-end';
-  sideBarOpen = true;
-  
-  ngOnInit(): void { }
-
-  sideBarToggler() {
-    this.sideBarOpen = !this.sideBarOpen;
-  }
+  sideNavStatus: boolean = false;
 }

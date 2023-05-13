@@ -14,7 +14,8 @@ import { UserService } from '../../services/user.service';
 export class LogginComponent implements OnInit {
   loginForm: any = FormGroup;
   responseMessage: any;
-  constructor(private formBuilder: FormBuilder,
+  constructor(
+    private formBuilder: FormBuilder,
     private router: Router,
     private userService: UserService,
     private dialogRef: MatDialogRef<LogginComponent>,

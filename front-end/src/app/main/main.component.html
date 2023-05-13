@@ -1,4 +1,4 @@
-<mat-drawer-container>
+<!-- <mat-drawer-container>
     <mat-drawer mode="side" [opened]="sideBarOpen">
         <app-sidenav></app-sidenav>
     </mat-drawer>
@@ -6,5 +6,14 @@
         <app-header (toggleSidebarForMe)="sideBarToggler()"></app-header>
         <router-outlet></router-outlet>
     </mat-drawer-content>
-</mat-drawer-container>
+</mat-drawer-container> -->
 
+<div class="container-fluid g-0">
+  <app-header (sideNavToggled)="sideNavStatus=$event;"></app-header>
+  <main>
+    <app-sidenav [sideNavStatus]="sideNavStatus" [ngClass]="{'app-sidenav-open': sideNavStatus}"></app-sidenav>
+    <div class="display-area p-3" [ngClass]="{'display-area-shrink': sideNavStatus}">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>

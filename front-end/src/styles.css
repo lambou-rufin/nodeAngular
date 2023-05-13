@@ -17,3 +17,8 @@ body { margin: 0; font-size: 30px; font-family: Roboto, "Helvetica Neue", sans-s
     background: #32cd32 !important;
     color: white !important;
 }
+@media only screen and (max-width: 600px) {
+    body {
+      background-color: lightblue;
+    }
+  }

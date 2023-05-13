@@ -16,7 +16,8 @@ export class SignupComponent implements OnInit {
   signupForm: any = FormGroup;
   responseMessage: any;
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(
+    private formBuilder: FormBuilder,
     private router: Router,
     private userService: UserService,
     // private snackbarService: SnackbarService,
