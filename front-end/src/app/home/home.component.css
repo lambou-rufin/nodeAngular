@@ -10,6 +10,8 @@
    margin-bottom: 50px;
    transition: all .2s ease-in-out;
    text-align: center;
+   border-bottom: 1px solid #292932;
+
 }
 
 .card:hover {
@@ -23,6 +25,7 @@
    margin-left: 2rem;
    margin-right: 1rem;
    transform: translateX(1%);
+   box-shadow: #000117;
 }
 
 .button {
