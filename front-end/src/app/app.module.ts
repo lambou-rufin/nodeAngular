@@ -39,7 +39,7 @@ const NgxUiLoaderConfig: NgxUiLoaderConfig = {
     MatMenuModule,
     NgxUiLoaderModule.forRoot(NgxUiLoaderConfig)
   ],
-  providers: [HttpClientModule,{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptorInterceptor,multi:true}],
+  providers: [HttpClientModule, { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

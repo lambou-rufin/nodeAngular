@@ -9,7 +9,7 @@ export class UserService {
   url = environment.apiUrl;
   constructor(private httpClient: HttpClient) { }
 
-  signup(data: any) { 
+  signup(data: any) {
     return this.httpClient.post(this.url + "user/signup", data, {
       headers: new HttpHeaders().set('Cotent-Type', "application/json")
     });
@@ -24,7 +24,7 @@ export class UserService {
       headers: new HttpHeaders().set('Content-Type', "application/json")
     });
   }
-  checkToken(){
+  checkToken() {
     return this.httpClient.get(this.url + "user/checkToken");
   }
   changePassword(data: any) {

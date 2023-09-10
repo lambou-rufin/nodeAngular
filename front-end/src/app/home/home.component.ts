@@ -22,23 +22,23 @@ export class HomeComponent implements AfterViewInit {
     this.dashboardData();
   }
 
-    dashboardData() {
-      this.homeService.getDetails().subscribe({
-        next: (response: any) => {
-          this.ngxService.stop();
-          this.data = response;
-        }, error: (error) => {
-          this.ngxService.stop();
-          if (error.error?.message) {
-            this.responseMessage = error.error?.message;
-          } else {
-            this.responseMessage = Globalconstants.genericError;
-          }
-          // this.snackbarService.openSnackBar(this.responseMessage,Globalconstants.error);
+  dashboardData() {
+    this.homeService.getDetails().subscribe({
+      next: (response: any) => {
+        this.ngxService.stop();
+        this.data = response;
+      }, error: (error) => {
+        this.ngxService.stop();
+        if (error.error?.message) {
+          this.responseMessage = error.error?.message;
+        } else {
+          this.responseMessage = Globalconstants.genericError;
         }
+        // this.snackbarService.openSnackBar(this.responseMessage,Globalconstants.error);
       }
-      )
     }
-
+    )
   }
+
+}
 

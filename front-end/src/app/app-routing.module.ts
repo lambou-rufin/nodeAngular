@@ -15,9 +15,9 @@ const routes: Routes = [
     component: LoginComponent,
     loadChildren: () => import("src/app/login/login.module").then((m) => m.LoginModule),    //this is the loading
     //  canActivate:[RouteGuardService],
-     data: {
-      expectedRole: ['admin','user']
-     }
+    data: {
+      expectedRole: ['admin', 'user']
+    }
   },
   {
     path: "dashboard",
@@ -25,7 +25,7 @@ const routes: Routes = [
     loadChildren: () => import("src/app/main/main.module").then((m) => m.MainModule), //this is the loading
     // canActivate:[AuthGuardGuard],
     data: {
-      expectedRole: ['admin','user']
+      expectedRole: ['admin', 'user']
     }
   },
   { path: '', redirectTo: 'welcome', 'pathMatch': 'full' },

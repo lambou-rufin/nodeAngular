@@ -10,7 +10,6 @@
    margin-bottom: 50px;
    transition: all .2s ease-in-out;
    text-align: center;
-   border-bottom: 1px solid #292932;
 
 }
 
@@ -65,8 +64,10 @@ div {
    width: 100%;
    background-color: gray;
    font-size: 1em;
+   box-shadow: #000117;
 }
-.span-dash{
-  margin-left: 4rem;
-  text-decoration: #000117;
+
+.span-dash {
+   margin-left: 4rem;
+   text-decoration: #000117;
 }
