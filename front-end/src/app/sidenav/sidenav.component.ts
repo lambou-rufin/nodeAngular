@@ -3,38 +3,28 @@ import { Component, OnInit, Input } from '@angular/core';
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
-  styleUrls: ['./sidenav.component.css']
+  styleUrls: ['./sidenav.component.css'],
 })
 export class SidenavComponent implements OnInit {
   @Input() sideNavStatus: boolean = false;
   list = [
     {
       number: '1',
-      name: 'home',
+      name: 'Dashboard',
       icon: 'fas fa-spinner fa-house',
     },
     {
       number: '1',
-      name: 'dashboard',
+      name: 'Categorie',
       icon: 'fa fa-dashboard',
     },
     {
       number: '1',
-      name: 'analytics',
+      name: 'Produit',
       icon: 'fa fa-dashboard',
-    },
-    {
-      number: '1',
-      name: 'home',
-      icon: 'fas fa-cog fa-spin',
     },
   ];
 
-  constructor() {
-
-  }
-  ngOnInit(): void {
-
-  }
-
+  constructor() {}
+  ngOnInit(): void {}
 }

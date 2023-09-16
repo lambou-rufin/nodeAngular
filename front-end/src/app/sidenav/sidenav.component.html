@@ -4,10 +4,9 @@
             <li class="nav-list-item border-white" *ngFor="let item of list">
                 <i class="{{item.icon}}"></i>
                 <span class="border-white">
-                    <a href="http://">{{item.name}}</a>
+                    <a routerLink="['/category']">{{item.name}}</a>
                 </span>
             </li>
         </ul>
-    
     </div>
 </mat-nav-list>

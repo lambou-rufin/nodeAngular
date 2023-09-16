@@ -21,10 +21,12 @@ import { HeaderComponent } from './header/header.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { NgxUiLoaderModule, NgxUiLoaderConfig, SPINNER, PB_DIRECTION } from 'ngx-ui-loader';
 import { LoginComponent } from './login/login.component';
 import { ConfirmationComponent } from './component/confirmation/confirmation.component';
 import { ChangePasswordComponent } from './component/change-password/change-password.component';
+import { MenuItems } from './Menu-items';
 
 
 const NgxUiLoaderConfig: NgxUiLoaderConfig = {
@@ -72,6 +74,7 @@ const NgxUiLoaderConfig: NgxUiLoaderConfig = {
     MatDividerModule,
     MatDialogModule,
     MatDatepickerModule,
+    MatAutocompleteModule,
     NgxUiLoaderModule.forRoot(NgxUiLoaderConfig)
 
   ],
@@ -97,7 +100,9 @@ const NgxUiLoaderConfig: NgxUiLoaderConfig = {
     MatDividerModule,
     MatCardModule,
     MatDialogModule,
-    MatDatepickerModule
-  ]
+    MatDatepickerModule,
+    MatAutocompleteModule
+  ],
+  providers: [MenuItems]
 })
 export class SharedModule { }

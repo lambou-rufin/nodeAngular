@@ -3,14 +3,13 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class HomeService {
-
   url = environment.apiUrl;
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
   getDetails() {
-    return this.httpClient.get(this.url + "dashboard/details/");
+    return this.httpClient.get(this.url + 'dashboard/details/');
   }
 }

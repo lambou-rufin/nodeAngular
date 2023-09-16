@@ -7,17 +7,17 @@ import { SnackbarService } from '../services/snackbar.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements AfterViewInit {
-
   responseMessage: any;
   data: any;
-  ngAfterViewInit() { }
-  constructor(private homeService: HomeService,
+  ngAfterViewInit() {}
+  constructor(
+    private homeService: HomeService,
     private ngxService: NgxUiLoaderService,
-    private snackbarService: SnackbarService) {
-
+    private snackbarService: SnackbarService
+  ) {
     this.ngxService.start();
     this.dashboardData();
   }
@@ -27,7 +27,8 @@ export class HomeComponent implements AfterViewInit {
       next: (response: any) => {
         this.ngxService.stop();
         this.data = response;
-      }, error: (error) => {
+      },
+      error: (error) => {
         this.ngxService.stop();
         if (error.error?.message) {
           this.responseMessage = error.error?.message;
@@ -35,10 +36,7 @@ export class HomeComponent implements AfterViewInit {
           this.responseMessage = Globalconstants.genericError;
         }
         // this.snackbarService.openSnackBar(this.responseMessage,Globalconstants.error);
-      }
-    }
-    )
+      },
+    });
   }
-
 }
-
