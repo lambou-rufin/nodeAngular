@@ -1,4 +1,4 @@
-<mat-toolbar>
+<!-- <mat-toolbar>
     <mat-toolbar-row class="justify-content-between">
         <button mat-icon-button (click)="SideNavToggled()">
             <mat-icon>menu</mat-icon>
@@ -17,4 +17,26 @@
             </button>
         </mat-menu>
     </mat-toolbar-row>
-</mat-toolbar>
+</mat-toolbar> -->
+
+<mat-toolbar>
+    <button (click)="SideNavToggled()" mat-icon-button>
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span class="title" routerLink="/">Dashboard</span>
+    <span class="spacer"></span>
+    <span class="welcome-text">Hello {{ user }}</span>
+    <button class="personPin" mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>person_pin</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="logout()">
+            <mat-icon>exit_to_app</mat-icon>
+            Se déconnecter
+        </button>
+      <button mat-menu-item (click)="changePassword()">
+        <mat-icon>password</mat-icon>
+        Modifier mot de passe
+    </button>
+    </mat-menu>
+  </mat-toolbar>

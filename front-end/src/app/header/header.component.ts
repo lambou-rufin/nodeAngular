@@ -3,6 +3,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ChangePasswordComponent } from '../component/change-password/change-password.component';
 import { ConfirmationComponent } from '../component/confirmation/confirmation.component';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -10,15 +11,18 @@ import { ConfirmationComponent } from '../component/confirmation/confirmation.co
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-
   role: any;
   @Output() sideNavToggled = new EventEmitter<boolean>();
   menuStatus: boolean = false;
+  user: string = 'Rufin';
+
 
   constructor(private router: Router,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog, private authService: AuthService) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    
+   }
 
   SideNavToggled() {
     this.menuStatus = !this.menuStatus;
