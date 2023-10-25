@@ -1,3 +1,11 @@
 h5{
     font-size: 19px;
 }
+.primary {
+    background-color: #000117;
+    color: rgb(255, 255, 255);
+  
+  }
+  /* mat-dialog-actions,button{
+    justify-content: space-evenly;
+  } */

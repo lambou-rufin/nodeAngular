@@ -8,6 +8,8 @@ import { SidenavComponent } from '../sidenav/sidenav.component';
 import { SharedModule } from '../shared.module';
 import { RouterModule } from '@angular/router';
 import { CategoryComponent } from '../manage/category/category.component';
+import { ProductComponent } from '../manage/product/product.component';
+import { BillComponent } from '../manage/bill/bill.component';
 
 
 @NgModule({
@@ -15,6 +17,8 @@ import { CategoryComponent } from '../manage/category/category.component';
     DashboardComponent,
     HomeComponent,
     CategoryComponent,
+    ProductComponent,
+    BillComponent
   ],
   imports: [
     CommonModule,

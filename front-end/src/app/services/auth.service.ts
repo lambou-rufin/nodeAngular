@@ -14,8 +14,11 @@ export class AuthService {
       this.router.navigate(['/']);
       return false;
     }
-     else {
-    return true;
+    else {
+      return true;
     }
+  }
+  getCurrentUser(){
+    
   }
 }

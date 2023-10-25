@@ -6,20 +6,40 @@ import { AuthGuardGuard } from '../guard/auth-guard.guard';
 import { HomeComponent } from '../home/home.component';
 import { CategoryComponent } from '../manage/category/category.component';
 import { SharedModule } from '../shared.module';
+import { ProductComponent } from '../manage/product/product.component';
+import { BillComponent } from '../manage/bill/bill.component';
 
 export const mainRoutes: Routes = [
-  { path: '', redirectTo: 'home', 'pathMatch': 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuardGuard] },
   {
-    path: 'category', component: CategoryComponent, canActivate: [AuthGuardGuard],
+    path: 'category',
+    component: CategoryComponent,
+    canActivate: [AuthGuardGuard],
     data: {
-      expectedRole: ['admin']
-    }
+      expectedRole: ['admin'],
+    },
+  },
+  {
+    path: 'produit',
+    component: ProductComponent,
+    canActivate: [AuthGuardGuard],
+    data: {
+      expectedRole: ['admin'],
+    },
+  },
+  {
+    path: 'bill',
+    component: BillComponent,
+    canActivate: [AuthGuardGuard],
+    data: {
+      expectedRole: ['admin'],
+    },
   },
 ];
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule, SharedModule]
+  imports: [CommonModule, SharedModule],
 })
-export class MainRoutingModule { }
+export class MainRoutingModule {}

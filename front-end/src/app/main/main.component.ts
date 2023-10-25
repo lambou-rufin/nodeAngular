@@ -7,11 +7,27 @@ import { Component } from '@angular/core';
 })
 export class MainComponent {
   title = 'front-end';
-  sideBarOpen = true;
-  
-  ngOnInit(): void { }
+  sideNavStatus: boolean = false;
+  list = [
+    {
+      number: '1',
+      name: 'Dashboard',
+      icon: 'fas fa-spinner fa-house',
+      url: '/dashboard/home',
+      
+    },
+    {
+      number: '1',
+      name: 'Categorie',
+      icon: 'fa fa-dashboard',
+      url: '/dashboard/category',
+    },
+    {
+      number: '1',
+      name: 'Produit',
+      icon: 'fa fa-dashboard',
+      url: '/dashboard/produit',
 
-  sideBarToggler() {
-    this.sideBarOpen = !this.sideBarOpen;
-  }
+    },
+  ];
 }

@@ -1,1 +1,47 @@
-<p>category works!</p>
+<mat-card>
+  <span>Gestion de la categorie</span>
+  <button
+    mat-flat-button
+    id="primary"
+    class="float-right"
+    (click)="handleAddAction()"
+  >
+    <mat-icon>add</mat-icon>
+  </button>
+</mat-card>
+<br />
+<mat-card>
+  <mat-form-field appreance="fill">
+    <mat-label>rechercher</mat-label>
+    <input matInput (keyup)="applyFilter($event)" #input />
+  </mat-form-field>
+</mat-card>
+<br />
+<div class="responsive_table">
+  <!-- <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matColumnDef>Name</th>
+      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+    </ng-container>
+
+    <ng-container mat-columnDef="edit">
+      <th mat-header-cell *matHeaderCellDef>Action</th>
+      <td mat-cell *matCellDef="let element" class="action-link">
+        <button
+          mat-icon-button
+          color="primary"
+          matTooltip="edit"
+          (click)="editCategorie(element)"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button (click)="supprimerCat+
+        egorie(element)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table> -->
+</div>

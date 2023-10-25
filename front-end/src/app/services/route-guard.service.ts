@@ -17,10 +17,10 @@ export class RouteGuardService {
   canActivate(route: ActivatedRouteSnapshot): boolean {
     // let expectedRoleArray: any = route.data;
     const token: any = localStorage.getItem('token');
-    if(token){
+    if (token) {
       this.router.navigate(['/dashboard']);
-    }else{
-    
+    } else {
+
       this.router.navigate(['/']);
     }
     return true;

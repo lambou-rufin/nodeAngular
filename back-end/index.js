@@ -14,7 +14,7 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-
+// racine des routes
 app.use('/user', userRoute);
 app.use('/category', categoryRoute);
 app.use('/product', productRoute);

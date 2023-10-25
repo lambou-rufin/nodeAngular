@@ -1,4 +1,4 @@
-import { Component,OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
@@ -9,12 +9,12 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 export class AppComponent implements OnInit {
   title = 'front-end';
   sideBarOpen = true;
-  constructor (private ngxService: NgxUiLoaderService){
+  constructor(private ngxService: NgxUiLoaderService) {
 
   }
-  ngOnInit(): void { 
+  ngOnInit(): void {
     this.ngxService.start();
-    
+
     setTimeout(() => {
       this.ngxService.stop()
     }, 2000);

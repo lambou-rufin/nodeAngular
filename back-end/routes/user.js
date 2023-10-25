@@ -4,6 +4,7 @@ const connection = require('../connection');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
+const bcrypt = require('bcrypt');
 require('dotenv').config();
 let auth = require("../services/Authentication");
 let checkRole = require("../services/checkRole");
@@ -147,8 +148,9 @@ router.get('/checkToken', auth.authenticateToken, (req, res) => {
 router.post('/changePassword', auth.authenticateToken, (req, res) => {
     const user = req.body;
     const email = res.locals.email;
-    console.log(email);
+    // console.log(email);
     let query = "select * from user where email=? and password=?";
+    // console.log(email,user)
     connection.query(query, [email, user.oldPassword], (err, results) => {
         if (!err) {
             if (results.length <= 0) {
@@ -156,7 +158,7 @@ router.post('/changePassword', auth.authenticateToken, (req, res) => {
             }
             else if (results[0].password == user.oldPassword) {
                 query = "update user set password=? where email=?";
-                connection.query(query, [user.newPassword, email], (err, results) => {
+                connection.query(query, [user.newPassowprd, email], (err, results) => {
                     if (!err) {
                         return res.status(200).json({ message: "Password updated successfully" });
                     } else {

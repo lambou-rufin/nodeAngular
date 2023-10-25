@@ -14,7 +14,8 @@ import { UserService } from 'src/app/services/user.service';
 export class ForgotPasswordComponent implements OnInit {
   forgotPasswordForm: any = FormGroup;
   responseMessage: any;
-  constructor(private formBuilder: FormBuilder,
+  constructor(
+    private formBuilder: FormBuilder,
     private userService: UserService,
     private dialogRef: MatDialogRef<ForgotPasswordComponent>,
     private ngxService: NgxUiLoaderService,

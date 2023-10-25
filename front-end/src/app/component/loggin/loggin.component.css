@@ -8,3 +8,15 @@ mat-form-field{
 mat-form-field {
   width: 100%;
 }
+.tolbar {
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+}
+.primary {
+  background-color: #000117;
+  color: rgb(255, 255, 255);
+
+}
+/* mat-dialog-actions,button{
+  justify-content: space-evenly;
+} */

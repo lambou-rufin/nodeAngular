@@ -11,29 +11,30 @@ import { RouteGuardService } from './services/route-guard.service';
 
 const routes: Routes = [
   {
-    path: "",
+    path: '',
     component: LoginComponent,
-    loadChildren: () => import("src/app/login/login.module").then((m) => m.LoginModule),    //this is the loading
+    loadChildren: () =>
+      import('src/app/login/login.module').then((m) => m.LoginModule), //this is the loading
     //  canActivate:[RouteGuardService],
-     data: {
-      expectedRole: ['admin','user']
-     }
+    data: {
+      expectedRole: ['admin', 'user'],
+    },
   },
   {
-    path: "dashboard",
+    path: 'dashboard',
     component: MainComponent,
-    loadChildren: () => import("src/app/main/main.module").then((m) => m.MainModule), //this is the loading
+    loadChildren: () =>
+      import('src/app/main/main.module').then((m) => m.MainModule), //this is the loading
     // canActivate:[AuthGuardGuard],
     data: {
-      expectedRole: ['admin','user']
-    }
+      expectedRole: ['admin', 'user'],
+    },
   },
-  { path: '', redirectTo: 'welcome', 'pathMatch': 'full' },
-
+  { path: '', redirectTo: 'welcome', pathMatch: 'full' },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

@@ -10,21 +10,24 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCardModule } from '@angular/material/card';
-import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MainComponent } from './main/main.component';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
-import {MatDialogModule} from '@angular/material/dialog';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import { NgxUiLoaderModule,NgxUiLoaderConfig,SPINNER,PB_DIRECTION } from 'ngx-ui-loader';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { NgxUiLoaderModule, NgxUiLoaderConfig, SPINNER, PB_DIRECTION } from 'ngx-ui-loader';
 import { LoginComponent } from './login/login.component';
 import { ConfirmationComponent } from './component/confirmation/confirmation.component';
 import { ChangePasswordComponent } from './component/change-password/change-password.component';
+import { MenuItems } from './Menu-items';
 
 
 const NgxUiLoaderConfig: NgxUiLoaderConfig = {
@@ -33,15 +36,15 @@ const NgxUiLoaderConfig: NgxUiLoaderConfig = {
   textPosition: "center-center",
   pbColor: "red",
   bgsColor: "red",
-  fgsColor:"red",
+  fgsColor: "red",
   fgsType: SPINNER.ballSpinClockwise,
-  fgsSize:100,
-  pbDirection:PB_DIRECTION.leftToRight,
-  pbThickness:5
+  fgsSize: 100,
+  pbDirection: PB_DIRECTION.leftToRight,
+  pbThickness: 5
 }
 
 @NgModule({
-  declarations: [    
+  declarations: [
     MainComponent,
     LoginComponent,
     HeaderComponent,
@@ -64,6 +67,7 @@ const NgxUiLoaderConfig: NgxUiLoaderConfig = {
     MatSnackBarModule,
     MatMenuModule,
     MatTableModule,
+    MatSortModule,
     MatPaginatorModule,
     HttpClientModule,
     CommonModule,
@@ -72,6 +76,7 @@ const NgxUiLoaderConfig: NgxUiLoaderConfig = {
     MatDividerModule,
     MatDialogModule,
     MatDatepickerModule,
+    MatAutocompleteModule,
     NgxUiLoaderModule.forRoot(NgxUiLoaderConfig)
 
   ],
@@ -91,13 +96,16 @@ const NgxUiLoaderConfig: NgxUiLoaderConfig = {
     MatListModule,
     MatMenuModule,
     MatTableModule,
+    MatSortModule,
     MatPaginatorModule,
     HttpClientModule,
     ReactiveFormsModule,
     MatDividerModule,
     MatCardModule,
     MatDialogModule,
-    MatDatepickerModule
-  ]
+    MatDatepickerModule,
+    MatAutocompleteModule
+  ],
+  providers: [MenuItems]
 })
 export class SharedModule { }

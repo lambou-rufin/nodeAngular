@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+<mat-toolbar class="tolbar">
   <mat-toolbar-row>
     <span class="title-center">Login</span>
   </mat-toolbar-row>
@@ -15,7 +15,7 @@
         </mat-error>
       </mat-form-field>
       <mat-form-field appearance="fill" fxFlex>
-        <mat-label>Password</mat-label>
+        <mat-label>Mot de passe</mat-label>
         <input matInput formControlName="password" type="password" required>
         <mat-error *ngIf="loginForm.controls.password.touched && loginForm.controls.password.invalid">
           <span *ngIf="loginForm.controls.password.errors.required">This field is mandatory</span>
@@ -26,7 +26,7 @@
   </form>
 </mat-dialog-content>
 <mat-dialog-actions align="center">
-  <button mat-raised-button color="primary" type="submit" (click)="handleSubmit()"
-    [disabled]="!loginForm.valid && loginForm.dirty">Login</button>
-  <button mat-raised-button color="warn" mat-dialog-close>Close</button>
+  <button mat-raised-button class="primary" type="submit" (click)="handleSubmit()"
+    [disabled]="!loginForm.valid && loginForm.dirty">se conneter</button>
+  <button mat-raised-button color="warn" mat-dialog-close>annuler</button>
 </mat-dialog-actions>

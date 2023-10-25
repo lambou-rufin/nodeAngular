@@ -9,7 +9,8 @@ mat-toolbar,
 a {
     text-decoration: none;
 }
-li{
+
+li {
     display: inline;
     padding-left: 0.8rem;
 }
@@ -27,7 +28,15 @@ img {
 }
 
 .mat-icon {
-    font-size: larger;
     height: 20px ;
     width: 20px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;  
+    border-radius: 1px;
+    align-content: space-between;
+}
+
+li,
+.mat-icon {
+    gap: 1rem;
 }
