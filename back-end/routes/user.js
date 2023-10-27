@@ -77,11 +77,30 @@ router.post("/login", (req, res) => {
   });
 });
 
+// router.get("/getCurrentUser", auth.authenticateToken, (req, res) => {
+//   // Les informations de l'utilisateur sont disponibles dans req.user
+//   const user = req.user;
+//   res.status(200).json(user);
+// });
 router.get("/getCurrentUser", auth.authenticateToken, (req, res) => {
   // Les informations de l'utilisateur sont maintenant disponibles dans req.user
   const user = req.user;
-  res.json(user);
+  res.status(200).json({ user });
 });
+
+
+// Ajoutez une nouvelle route pour récupérer tous les utilisateurs
+router.get("/getUsers", (req, res) => {
+  let query = "SELECT * FROM user";
+  connection.query(query, (err, results) => {
+    if (!err) {
+      return res.status(200).json(results);
+    } else {
+      return res.status(500).json(err);
+    }
+  });
+});
+
 router.post("/forgotPassword", (req, res) => {
   let user = req.body;
   query = "select email,password from user where email = ?";

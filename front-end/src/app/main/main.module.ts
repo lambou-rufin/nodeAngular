@@ -10,6 +10,7 @@ import { RouterModule } from '@angular/router';
 import { CategoryComponent } from '../manage/category/category.component';
 import { ProductComponent } from '../manage/product/product.component';
 import { BillComponent } from '../manage/bill/bill.component';
+import { UsersComponent } from '../component/users/users.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { BillComponent } from '../manage/bill/bill.component';
     HomeComponent,
     CategoryComponent,
     ProductComponent,
-    BillComponent
+    BillComponent,
+    UsersComponent
   ],
   imports: [
     CommonModule,

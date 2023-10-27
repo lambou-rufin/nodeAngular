@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -32,4 +33,11 @@ export class UserService {
       headers: new HttpHeaders().set('Content-Type', 'application/json'),
     });
   }
+  getCurrentUser(data: any): Observable<any> {
+    return this.httpClient.get(this.url + 'user/getCurrentUser'); // Assurez-vous que l'URL correspond à l'URL de votre API
+  }
+  getUsers(data: any): Observable<any> {
+    return this.httpClient.get(this.url + 'user/getUsers'); // Assurez-vous que l'URL correspond à l'URL de votre API
+  }
+  
 }

@@ -8,6 +8,7 @@ import { CategoryComponent } from '../manage/category/category.component';
 import { SharedModule } from '../shared.module';
 import { ProductComponent } from '../manage/product/product.component';
 import { BillComponent } from '../manage/bill/bill.component';
+import { UsersComponent } from '../component/users/users.component';
 
 export const mainRoutes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -36,6 +37,14 @@ export const mainRoutes: Routes = [
       expectedRole: ['admin'],
     },
   },
+  {
+  path: 'user',
+  component: UsersComponent,
+  canActivate: [AuthGuardGuard],
+  data: {
+    expectedRole: ['admin'],
+  },
+  }
 ];
 
 @NgModule({

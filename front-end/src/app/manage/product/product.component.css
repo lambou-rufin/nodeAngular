@@ -1,8 +1,11 @@
 mat-card {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 300px;
+    flex-flow: row wrap;
+    object-fit: cover;
     width: 100%;
-     background-color: #eceaea;
-     font-size: 1em;
-     box-shadow: #000117;
-     margin: 1rem;
+    margin: 1rem;
+    padding: 5px;
      /* height: 80vh; */
   }

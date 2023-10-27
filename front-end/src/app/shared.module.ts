@@ -15,6 +15,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { MainComponent } from './main/main.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
@@ -27,6 +28,7 @@ import { NgxUiLoaderModule, NgxUiLoaderConfig, SPINNER, PB_DIRECTION } from 'ngx
 import { LoginComponent } from './login/login.component';
 import { ConfirmationComponent } from './component/confirmation/confirmation.component';
 import { ChangePasswordComponent } from './component/change-password/change-password.component';
+import { SampleDialogComponent } from './component/sample-dialog/sample-dialog.component';
 import { MenuItems } from './Menu-items';
 
 
@@ -50,7 +52,8 @@ const NgxUiLoaderConfig: NgxUiLoaderConfig = {
     HeaderComponent,
     SidenavComponent,
     ConfirmationComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    SampleDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -71,6 +74,7 @@ const NgxUiLoaderConfig: NgxUiLoaderConfig = {
     MatPaginatorModule,
     HttpClientModule,
     CommonModule,
+    MatSlideToggleModule,
     MatCardModule,
     ReactiveFormsModule,
     MatDividerModule,
@@ -95,6 +99,7 @@ const NgxUiLoaderConfig: NgxUiLoaderConfig = {
     FormsModule,
     MatListModule,
     MatMenuModule,
+    MatSlideToggleModule,
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,

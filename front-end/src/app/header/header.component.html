@@ -20,23 +20,33 @@
 </mat-toolbar> -->
 
 <mat-toolbar>
-    <button (click)="SideNavToggled()" mat-icon-button>
-      <mat-icon>menu</mat-icon>
+  <button class="okok" (click)="SideNavToggled()" mat-icon-button>
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span class="title">Dashboard</span>
+  <span class="spacer"></span>
+  <button>
+    <div class="flex-stretch"></div>
+    <mat-slide-toggle
+    class="example-margin"
+    [color]="color"
+    [checked]="checked"
+    [disabled]="disabled">
+  Mode sombre
+</mat-slide-toggle>
+  </button>
+  <span class="welcome-text"> {{ user }}</span>
+  <button class="personPin" mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>person_pin</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>exit_to_app</mat-icon>
+      Se déconnecter
     </button>
-    <span class="title" routerLink="/">Dashboard</span>
-    <span class="spacer"></span>
-    <span class="welcome-text">Hello {{ user }}</span>
-    <button class="personPin" mat-icon-button [matMenuTriggerFor]="menu">
-      <mat-icon>person_pin</mat-icon>
+    <button mat-menu-item (click)="changePassword()">
+      <mat-icon>password</mat-icon>
+      Modifier mot de passe
     </button>
-    <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="logout()">
-            <mat-icon>exit_to_app</mat-icon>
-            Se déconnecter
-        </button>
-      <button mat-menu-item (click)="changePassword()">
-        <mat-icon>password</mat-icon>
-        Modifier mot de passe
-    </button>
-    </mat-menu>
-  </mat-toolbar>
+  </mat-menu>
+</mat-toolbar>
