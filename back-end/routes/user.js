@@ -88,8 +88,7 @@ router.get("/getCurrentUser", auth.authenticateToken, (req, res) => {
   res.status(200).json({ user });
 });
 
-
-// Ajoutez une nouvelle route pour récupérer tous les utilisateurs
+// une nouvelle route pour récupérer tous les utilisateurs
 router.get("/getUsers", (req, res) => {
   let query = "SELECT * FROM user";
   connection.query(query, (err, results) => {

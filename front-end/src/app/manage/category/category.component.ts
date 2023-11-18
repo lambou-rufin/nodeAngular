@@ -15,6 +15,7 @@ import { MatSort } from '@angular/material/sort';
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.css'],
 })
+
 export class CategoryComponent implements OnInit {
   displayedColumns: string[] = ['id','name', 'edit'];
   dataSource: any;

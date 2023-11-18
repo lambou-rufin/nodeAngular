@@ -20,7 +20,7 @@ export class HeaderComponent implements OnInit {
   role: any;
   @Output() sideNavToggled = new EventEmitter<boolean>();
   menuStatus: boolean = false;
-  user: string = '';
+  users!: any[];
   title = 'Angular material dark mode';
   color: ThemePalette = 'accent';
   checked = false;
@@ -50,7 +50,7 @@ export class HeaderComponent implements OnInit {
     .subscribe({
       next: (user) => {
         console.log('Utilisateur courant :', user);
-        console.log(this.user);
+        console.log(this.users);
         // Traitez les données de l'utilisateur comme vous le souhaitez
       },
       error: (error) => {
