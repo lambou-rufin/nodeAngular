@@ -1,43 +1,67 @@
 const express = require("express");
 const connection = require("../connection");
 const router = express.Router();
-var auth = require("../services/Authentication");
-var checkRole = require("../services/checkRole");
+const auth = require("../services/Authentication");
+const checkRole = require("../services/checkRole");
 
-router.post('/add', auth.authenticateToken, checkRole.checkRole, (req, res, next) => {
-    let category = req.body;
-    query = "insert into category (name) values(?)";
-    connection.query(query, [category.name], (err, results) => {
-        if (!err) {
-            return res.status(200).json({ message: "Category added succssfully" });
-        } else {
-            return res.status(500).json(err);
+// Fonction utilitaire pour exécuter une requête SQL avec async/await
+const executeQuery = (query, params = []) => {
+    return new Promise((resolve, reject) => {
+        connection.query(query, params, (err, results) => {
+            if (err) reject(err);
+            else resolve(results);
+        });
+    });
+};
+
+// Ajouter une catégorie
+router.post('/add', auth.authenticateToken, checkRole.checkRole, async (req, res) => {
+    try {
+        const { name } = req.body;
+        if (!name) {
+            return res.status(400).json({ message: "Category name is required" });
         }
-    })
-})
-router.get('/get', auth.authenticateToken, (req, res, next) => {
-    var query = "select * from category order by name";
-    connection.query(query, (err, results) => {
-        if (!err) {
-            return res.status(200).json(results);
-        } else {
-            return res.status(500).json(err);
+
+        const query = "INSERT INTO category (name) VALUES (?)";
+        await executeQuery(query, [name]);
+
+        res.status(201).json({ message: "Category added successfully" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Récupérer toutes les catégories
+router.get('/get', auth.authenticateToken, async (req, res) => {
+    try {
+        const query = "SELECT * FROM category ORDER BY name";
+        const results = await executeQuery(query);
+
+        res.status(200).json(results);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Mettre à jour une catégorie
+router.patch('/update', auth.authenticateToken, checkRole.checkRole, async (req, res) => {
+    try {
+        const { id, name } = req.body;
+        if (!id || !name) {
+            return res.status(400).json({ message: "Category id and name are required" });
         }
-    })
-})
-router.patch('/update', auth.authenticateToken, checkRole.checkRole, (req, res, next) => {
-    let product = req.body;
-    var query = "update category set name=? where id=?";
-    connection.query(query, [product.name, product.id], (err, results) => {
-        if (!err) {
-            if (results.affectedRows == 0) {
-                return res.status(404).json({ message: "Category id does not found" });
-            }
-            return res.status(200).json({ message: "Category updated successfully" });
-        } else {
-            return res.status(500).json(err);
+
+        const query = "UPDATE category SET name = ? WHERE id = ?";
+        const results = await executeQuery(query, [name, id]);
+
+        if (results.affectedRows === 0) {
+            return res.status(404).json({ message: "Category ID not found" });
         }
-    })
-})
+
+        res.status(200).json({ message: "Category updated successfully" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
 
 module.exports = router;

@@ -1,92 +1,142 @@
 const express = require("express");
 const connection = require("../connection");
 const router = express.Router();
-var auth = require("../services/Authentication");
-var checkRole = require("../services/checkRole");
+const auth = require("../services/Authentication");
+const checkRole = require("../services/checkRole");
 
-router.post('/add', auth.authenticateToken, checkRole.checkRole, (req, res, next) => {
-    let product = req.body;
-    query = "insert into product (name,categoryId,description,price,status) values(?,?,?,?,'true')";
-    connection.query(query, [product.name, product.categoryId, product.description, product.price], (err, results) => {
-        if (!err) {
-            return res.status(200).json({ message: "Product added succssfully." });
-        } else {
-            return res.status(500).json(err);
+// Helper pour exécuter une requête SQL avec async/await
+const executeQuery = (query, params = []) => {
+    return new Promise((resolve, reject) => {
+        connection.query(query, params, (err, results) => {
+            if (err) reject(err);
+            else resolve(results);
+        });
+    });
+};
+
+// Ajouter un produit
+router.post('/add', auth.authenticateToken, checkRole.checkRole, async (req, res) => {
+    try {
+        const { name, categoryId, description, price } = req.body;
+        if (!name || !categoryId || !description || !price) {
+            return res.status(400).json({ message: "Tous les champs sont requis." });
         }
-    })
-})
-router.get('/get', auth.authenticateToken, (req, res, next) => {
-    var query = "select p.id,p.name,p.description,p.price,p.status,c.id as categoryId, c.name as categoryName from product as p INNER JOIN category as c where p.categoryId = c.id";
-    connection.query(query, (err, results) => {
-        if (!err) {
-            return res.status(200).json(results);
-        } else {
-            return res.status(500).json(err);
+
+        const query = "INSERT INTO product (name, categoryId, description, price, status) VALUES (?, ?, ?, ?, 'true')";
+        await executeQuery(query, [name, categoryId, description, price]);
+
+        res.status(201).json({ message: "Produit ajouté avec succès." });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Récupérer tous les produits avec leur catégorie
+router.get('/get', auth.authenticateToken, async (req, res) => {
+    try {
+        const query = `
+            SELECT p.id, p.name, p.description, p.price, p.status, 
+                   c.id AS categoryId, c.name AS categoryName
+            FROM product AS p 
+            INNER JOIN category AS c ON p.categoryId = c.id`;
+        const products = await executeQuery(query);
+        res.status(200).json(products);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Récupérer les produits d'une catégorie
+router.get('/getByCategory/:id', auth.authenticateToken, async (req, res) => {
+    try {
+        const { id } = req.params;
+        if (!id) return res.status(400).json({ message: "ID de catégorie requis." });
+
+        const query = "SELECT id, name FROM product WHERE categoryId = ? AND status = 'true'";
+        const products = await executeQuery(query, [id]);
+
+        res.status(200).json(products);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Récupérer un produit par son ID
+router.get('/getById/:id', auth.authenticateToken, async (req, res) => {
+    try {
+        const { id } = req.params;
+        if (!id) return res.status(400).json({ message: "ID du produit requis." });
+
+        const query = "SELECT id, name, description, price FROM product WHERE id = ?";
+        const [product] = await executeQuery(query, [id]);
+
+        if (!product) return res.status(404).json({ message: "Produit non trouvé." });
+
+        res.status(200).json(product);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Mettre à jour un produit
+router.patch('/update', auth.authenticateToken, checkRole.checkRole, async (req, res) => {
+    try {
+        const { id, name, categoryId, description, price } = req.body;
+        if (!id || !name || !categoryId || !description || !price) {
+            return res.status(400).json({ message: "Tous les champs sont requis." });
         }
-    })
-})
-router.get('/getByCategory/:id', auth.authenticateToken, (req, res, next) => {
-    const id = req.params.id;
-    var query = "select id,name from product where categoryId= ? and status= 'true'";
-    connection.query(query, [id], (err, results) => {
-        if (!err) {
-            return res.status(200).json(results);
-        } else {
-            return res.status(500).json(err);
+
+        const query = "UPDATE product SET name=?, categoryId=?, description=?, price=? WHERE id=?";
+        const result = await executeQuery(query, [name, categoryId, description, price, id]);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: "Produit non trouvé." });
         }
-    })
-})
-router.get('/getById/:id', auth.authenticateToken, (req, res, next) => {
-    const id = req.params.id;
-    var query = "select id,name,description,price from product where id = ?";
-    connection.query(query, [id], (err, results) => {
-        if (!err) {
-            return res.status(200).json(results[0]);
-        } else {
-            return res.status(500).json(err);
+
+        res.status(200).json({ message: "Produit mis à jour avec succès." });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Supprimer un produit
+router.delete('/delete/:id', auth.authenticateToken, checkRole.checkRole, async (req, res) => {
+    try {
+        const { id } = req.params;
+        if (!id) return res.status(400).json({ message: "ID du produit requis." });
+
+        const query = "DELETE FROM product WHERE id=?";
+        const result = await executeQuery(query, [id]);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: "Produit non trouvé." });
         }
-    })
-})
-router.patch('/update', auth.authenticateToken, checkRole.checkRole, (req, res, next) => {
-    let product = req.body;
-    var query = "update product set name=?,categoryId=?,description=?,price=? where id=?";
-    connection.query(query, [product.name, product.categoryId, product.description, product.price, product.id], (err, results) => {
-        if (!err) {
-            if (results.affectedRows == 0) {
-                return res.status(404).json({ message: "Product id does not found" });
-            }
-            return res.status(200).json({ message: "Product updated successfully" });
-        } else {
-            return res.status(500).json(err);
+
+        res.status(200).json({ message: "Produit supprimé avec succès." });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Mettre à jour le statut d'un produit
+router.patch('/updateStatus', auth.authenticateToken, checkRole.checkRole, async (req, res) => {
+    try {
+        const { id, status } = req.body;
+        if (!id || status === undefined) {
+            return res.status(400).json({ message: "ID et statut requis." });
         }
-    })
-})
-router.delete('/delete/:id', auth.authenticateToken, checkRole.checkRole, (req, res, next) => {
-    const id = req.params.id;
-    var query = "delete from product where id=?";
-    connection.query(query, [id], (err, results) => {
-        if (!err) {
-            if (results.affectedRows == 0) {
-                return res.status(404).json({ message: "Product id does not found" });
-            }
-            return res.status(200).json({ message: "Product deleted successfully" });
-        } else {
-            return res.status(500).json(err);
+
+        const query = "UPDATE product SET status=? WHERE id=?";
+        const result = await executeQuery(query, [status, id]);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: "Produit non trouvé." });
         }
-    })
-})
-router.patch('/updateStatus', auth.authenticateToken, checkRole.checkRole, (req, res, next) => {
-    let user = req.body;
-    var query = "update product set status=? where id=?";
-    connection.query(query, [user.status, user.id], (err, results) => {
-        if (!err) {
-            if (results.affectedRows == 0) {
-                return res.status(404).json({ message: "Product id does not found" });
-            }
-            return res.status(200).json({ message: "Product Status updated successfully" });
-        } else {
-            return res.status(500).json(err);
-        }
-    })
-})
+
+        res.status(200).json({ message: "Statut du produit mis à jour avec succès." });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 module.exports = router;

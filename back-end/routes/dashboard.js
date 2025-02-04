@@ -1,43 +1,38 @@
 const express = require('express');
 const connection = require('../connection');
 const router = express.Router();
-var auth = require('../services/Authentication');
+const auth = require('../services/Authentication');
 
-router.get('/details', auth.authenticateToken, (req, res, next) => {
-    var categoryCount;
-    var productCount;
-    var billCount;
+// Fonction utilitaire pour exécuter une requête SQL avec async/await
+const executeQuery = (query) => {
+    return new Promise((resolve, reject) => {
+        connection.query(query, (err, results) => {
+            if (err) reject(err);
+            else resolve(results[0]);
+        });
+    });
+};
 
-    var query = "select count(id) as categoryCount from category";
-    connection.query(query, (err, results) => {
-        if (!err) {
-            categoryCount = results[0].categoryCount;
-        } else {
-            return res.status(500).json(err);
-        }
-    })
-    var query = "select count(id) as productCount from product";
-    connection.query(query, (err, results) => {
-        if (!err) {
-            productCount = results[0].productCount;
-        } else {
-            return res.status(500).json(err);
-        }
-    })
-    var query = "select count(id) as billCount from product";
-    connection.query(query, (err, results) => {
-        if (!err) {
-            billCount = results[0].billCount;
-            var data = {
-                category:categoryCount,
-                product:productCount,
-                bill:billCount
-            }
-            return res.status(200).json(data);
-        } else {
-            return res.status(500).json(err);
-        }
-    })
-})
+router.get('/details', auth.authenticateToken, async (req, res) => {
+    try {
+        // Exécuter les requêtes en parallèle avec Promise.all pour optimiser la vitesse
+        const [categoryResult, productResult, billResult] = await Promise.all([
+            executeQuery("SELECT COUNT(id) AS categoryCount FROM category"),
+            executeQuery("SELECT COUNT(id) AS productCount FROM product"),
+            executeQuery("SELECT COUNT(id) AS billCount FROM bill") // Correction: `bill` au lieu de `product`
+        ]);
+
+        // Construire l'objet réponse
+        const data = {
+            category: categoryResult.categoryCount,
+            product: productResult.productCount,
+            bill: billResult.billCount
+        };
+
+        res.status(200).json(data);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
 
 module.exports = router;

@@ -1,89 +1,143 @@
-const express = require('express');
-const connection = require('../connection');
+const express = require("express");
+const connection = require("../connection");
 const router = express.Router();
-let ejs = require('ejs');
-let pdf = require('html-pdf');
-let path = require('path');
-const fs = require('fs');
-const uuid = require('uuid');
-const auth = require('../services/Authentication');
+const ejs = require("ejs");
+const pdf = require("html-pdf");
+const path = require("path");
+const fs = require("fs");
+const uuid = require("uuid");
+const auth = require("../services/Authentication");
 
-router.post('/generateReport', auth.authenticateToken, (req, res) => {
-    const generatedUuid = uuid.v1();
-    const orderDetails = req.body;
-    const productDetailsReport = JSON.parse(orderDetails.productDetails);
+// Fonction utilitaire pour exécuter une requête SQL avec async/await
+const executeQuery = (query, params = []) => {
+    return new Promise((resolve, reject) => {
+        connection.query(query, params, (err, results) => {
+            if (err) reject(err);
+            else resolve(results);
+        });
+    });
+};
 
-    let query = "insert into bill (name,uuid,email,contactNumber,paymentMethod,total,productDetails,createdBy) values(?,?,?,?,?,?,?,?)";
-    connection.query(query, [orderDetails.name, generatedUuid, orderDetails.email, orderDetails.contactNumber, orderDetails.paymentMethod, orderDetails.totalAmount, orderDetails.productDetails, res.locals.email], (err, results) => {
-        if (!err) {
-            ejs.renderFile(path.join(__dirname, '', "report.ejs", { productDetails: productDetailsReport, name: orderDetails.name, email: orderDetails.email, contactNumber: orderDetails.contactNumber, paymentMethod: orderDetails.paymentMethod, totalAmount: orderDetails.totalAmount }, (err, results) => {
-                if (err) {
-                    return res.status(500).json(err);
-                } else {
-                    pdf.create(results).toFile('./genereted_pdf/' + generatedUuid + ".pdf", function (err, data) {
-                        if (err) {
-                            console.log(err);
-                            return res.status(500).json(err);
-                        } else {
-                            return res.status(200).json({ uuid: generatedUuid });
-                        }
-                    })
-                }
-            }))
+// Générer un rapport PDF et enregistrer dans la base de données
+router.post("/generateReport", auth.authenticateToken, async (req, res) => {
+    try {
+        const generatedUuid = uuid.v1();
+        const orderDetails = req.body;
+
+        if (!orderDetails.productDetails || !orderDetails.name || !orderDetails.email) {
+            return res.status(400).json({ message: "Missing required fields" });
         }
-        else {
-            return res.status(500).json(err);
-        }
-    })
-})
-router.get('/getPdf', auth.authenticateToken, function (req, res) {
-    const orderDetails = req.body;
-    const pdfPath = './generated_pdf/' + orderDetails.uuid + '.pdf';
-    if (fs.existsSync(pdfPath)) {
-        res.contentType("Application/pdf");
-        fs.createReadStream(pdfPath).pipe(res);
-    } else {
-        let productDetailsReport = JSON.parse(orderDetails.productDetails);
-        ejs.renderFile(path.join(__dirname, '', "report.ejs", { productDetails: productDetailsReport, name: orderDetails.name, email: orderDetails.email, contactNumber: orderDetails.contactNumber, paymentMethod: orderDetails.paymentMethod, totalAmount: orderDetails.totalAmount }, (err, results) => {
+
+        const productDetailsReport = JSON.parse(orderDetails.productDetails);
+        const query = "INSERT INTO bill (name, uuid, email, contactNumber, paymentMethod, total, productDetails, createdBy) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        
+        await executeQuery(query, [
+            orderDetails.name,
+            generatedUuid,
+            orderDetails.email,
+            orderDetails.contactNumber,
+            orderDetails.paymentMethod,
+            orderDetails.totalAmount,
+            orderDetails.productDetails,
+            res.locals.email,
+        ]);
+
+        // Génération du PDF
+        const filePath = `./generated_pdf/${generatedUuid}.pdf`;
+        ejs.renderFile(path.join(__dirname, "report.ejs"), {
+            productDetails: productDetailsReport,
+            name: orderDetails.name,
+            email: orderDetails.email,
+            contactNumber: orderDetails.contactNumber,
+            paymentMethod: orderDetails.paymentMethod,
+            totalAmount: orderDetails.totalAmount,
+        }, (err, html) => {
             if (err) {
-                return res.status(500).json(err);
-            } else {
-                pdf.create(results).toFile('./genereted_pdf/' + orderDetails.uuid + ".pdf", function (err, data) {
-                    if (err) {
-                        console.log(err);
-                        return res.status(500).json(err);
-                    } else {
-                        res.contentType("Application/pdf");
-                        fs.createReadStream(pdfPath).pipe(res);
-                    }
-                })
+                return res.status(500).json({ error: "Error generating PDF template", details: err.message });
             }
-        }))
+
+            pdf.create(html).toFile(filePath, (err) => {
+                if (err) {
+                    return res.status(500).json({ error: "Error creating PDF", details: err.message });
+                }
+                res.status(201).json({ uuid: generatedUuid });
+            });
+        });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
-}
-)
-router.get('/getBills', auth.authenticateToken, (req, res, next) => {
-    var query = "select * from bill order by id DESC";
-    connection.query(query, (err, results) => {
-        if (!err) {
-            return res.status(200).json(results);
-        } else {
-            return res.status(500).json(err);
+});
+
+// Télécharger un PDF existant ou le générer s'il n'existe pas
+router.get("/getPdf", auth.authenticateToken, async (req, res) => {
+    try {
+        const { uuid, productDetails, name, email, contactNumber, paymentMethod, totalAmount } = req.body;
+        if (!uuid) {
+            return res.status(400).json({ message: "UUID is required" });
         }
-    })
-})
-router.delete('/delete/:id', auth.authenticateToken, (req, res, next) => {
-    const id = req.params.id;
-    var query = "delete from bill where id=?";
-    connection.query(query, [id], (err, results) => {
-        if (!err) {
-            if (results.affectedRows == 0) {
-                return res.status(404).json({ message: "Bill id does not found" });
+
+        const pdfPath = `./generated_pdf/${uuid}.pdf`;
+        if (fs.existsSync(pdfPath)) {
+            res.contentType("application/pdf");
+            return fs.createReadStream(pdfPath).pipe(res);
+        }
+
+        if (!productDetails) {
+            return res.status(400).json({ message: "Product details required to regenerate PDF" });
+        }
+
+        const productDetailsReport = JSON.parse(productDetails);
+        ejs.renderFile(path.join(__dirname, "report.ejs"), {
+            productDetails: productDetailsReport,
+            name,
+            email,
+            contactNumber,
+            paymentMethod,
+            totalAmount,
+        }, (err, html) => {
+            if (err) {
+                return res.status(500).json({ error: "Error generating PDF template", details: err.message });
             }
-            return res.status(200).json({ message: "Bill id deleted successfully" });
-        } else {
-            return res.status(500).json(err);
+
+            pdf.create(html).toFile(pdfPath, (err) => {
+                if (err) {
+                    return res.status(500).json({ error: "Error creating PDF", details: err.message });
+                }
+                res.contentType("application/pdf");
+                fs.createReadStream(pdfPath).pipe(res);
+            });
+        });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Récupérer toutes les factures
+router.get("/getBills", auth.authenticateToken, async (req, res) => {
+    try {
+        const query = "SELECT * FROM bill ORDER BY id DESC";
+        const results = await executeQuery(query);
+        res.status(200).json(results);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Supprimer une facture
+router.delete("/delete/:id", auth.authenticateToken, async (req, res) => {
+    try {
+        const { id } = req.params;
+        const query = "DELETE FROM bill WHERE id = ?";
+        const results = await executeQuery(query, [id]);
+
+        if (results.affectedRows === 0) {
+            return res.status(404).json({ message: "Bill ID not found" });
         }
-    })
-})
+
+        res.status(200).json({ message: "Bill deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 module.exports = router;
