@@ -18,7 +18,7 @@ const queryAsync = (sql, params) => {
     });
 };
 
-// ✅ SIGNUP (Inscription)
+//SIGNUP (Inscription)
 router.post('/signup', async (req, res) => {
     try {
         const { name, contactNumber, email, password } = req.body;
@@ -43,7 +43,7 @@ router.post('/signup', async (req, res) => {
     }
 });
 
-// ✅ LOGIN (Connexion)
+//LOGIN (Connexion)
 router.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -75,7 +75,7 @@ router.post('/login', async (req, res) => {
     }
 });
 
-// ✅ FORGOT PASSWORD (Mot de passe oublié)
+//FORGOT PASSWORD (Mot de passe oublié)
 router.post('/forgotPassword', async (req, res) => {
     try {
         const { email } = req.body;
@@ -109,7 +109,7 @@ router.post('/forgotPassword', async (req, res) => {
     }
 });
 
-// ✅ GET USERS (Récupérer tous les utilisateurs)
+// GET USERS (Récupérer tous les utilisateurs)
 router.get('/get', auth.authenticateToken, checkRole.checkRole, async (req, res) => {
     try {
         const query = "SELECT id, name, email, contactNumber, status FROM user WHERE role = 'user'";
@@ -120,7 +120,7 @@ router.get('/get', auth.authenticateToken, checkRole.checkRole, async (req, res)
     }
 });
 
-// ✅ UPDATE USER STATUS (Mise à jour du statut d'un utilisateur)
+// UPDATE USER STATUS (Mise à jour du statut d'un utilisateur)
 router.patch('/update', auth.authenticateToken, checkRole.checkRole, async (req, res) => {
     try {
         const { id, status } = req.body;
@@ -138,12 +138,12 @@ router.patch('/update', auth.authenticateToken, checkRole.checkRole, async (req,
     }
 });
 
-// ✅ CHECK TOKEN (Vérifier si le token est valide)
+// CHECK TOKEN (Vérifier si le token est valide)
 router.get('/checkToken', auth.authenticateToken, (req, res) => {
     res.status(200).json({ message: "Token valide." });
 });
 
-// ✅ CHANGE PASSWORD (Changer le mot de passe)
+// CHANGE PASSWORD (Changer le mot de passe)
 router.post('/changePassword', auth.authenticateToken, async (req, res) => {
     try {
         const { oldPassword, newPassword } = req.body;
